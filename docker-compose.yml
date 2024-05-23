@@ -1,0 +1,43 @@
+version: '3.8'
+
+services:
+  todo_db:
+    image: mysql:8.0
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - todo_network
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+  web:
+    build: .
+    ports:
+      - "5000:5000"
+    restart: always
+    environment:
+      FLASK_ENV: development
+#      SQLALCHEMY_DATABASE_URI: mysql://user:password@config/todo_db
+    depends_on:
+      - todo_db
+    networks:
+      - todo_network
+
+volumes:
+  db_data:
+
+networks:
+  todo_network:
+    driver: bridge
