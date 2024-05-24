@@ -29,9 +29,10 @@ services:
     restart: always
     environment:
       FLASK_ENV: development
-#      SQLALCHEMY_DATABASE_URI: mysql://user:password@config/todo_db
     depends_on:
       - todo_db
+    volumes:
+      - .:/app
     networks:
       - todo_network
 

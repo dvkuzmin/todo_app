@@ -5,13 +5,13 @@ from sqlalchemy.orm import sessionmaker, scoped_session
 from sqlalchemy import create_engine
 
 from todo_app.config import Settings
-import todo_app.config.logger_configure
 
-from todo_app.routes import bp
+from todo_app.api import bp
 
 
 
 def create_app():
+    """Функция создания Flask приложения, добавления конфигурации и создание сесссий"""
     logger = logging.getLogger(__name__)
 
     app = Flask(__name__)
@@ -37,6 +37,7 @@ def create_app():
     return app
 
 def main():
+    """Создание и запуск приложения"""
     app = create_app()
     app.run(host='0.0.0.0', port=5000, debug=True)
 

@@ -7,7 +7,7 @@ from pydantic_settings import BaseSettings
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 os.path.join(BASE_DIR)
 
-class Settings(BaseSettings):
+class Settings(BaseSettings): # Настройки базы данных, беруться из переменных окружения в файле .env
     MYSQL_DATABASE: str
     MYSQL_USER: str
     MYSQL_PASSWORD: str
@@ -16,7 +16,7 @@ class Settings(BaseSettings):
     MYSQL_ROOT_PASSWORD: str
 
     @property
-    def db_uri(self) -> str:
+    def db_uri(self) -> str: # uri для подключение к базе данных
         return f'mysql+pymysql://{self.MYSQL_USER}:{self.MYSQL_PASSWORD}@{self.MYSQL_HOST}:' \
                f'{self.MYSQL_PORT}/{self.MYSQL_DATABASE}'
 
