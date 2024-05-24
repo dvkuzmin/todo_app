@@ -12,7 +12,7 @@
 Склонируйте репозиторий:
 
 ```bash
-git clone https://github.com/dvkuzmin/currency_catalog.git
+git clone git@github.com:dvkuzmin/todo_app.git
 ```
 
 Создайте виртуальное окружение, затем выполните команду:
